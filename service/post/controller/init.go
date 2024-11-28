@@ -1,16 +1,19 @@
 package controller
+
 import (
-    "github.com/gin-gonic/gin"
-	"github.com/1111000110/go_service/service/post/controller/handler"
+	"github.com/1111000110/go_service/service/post/controller/handlers"
+	"github.com/gin-gonic/gin"
 )
+
 var postRoutes = map[string]gin.HandlerFunc{
-	"/getpost": handler.getpost,
-	"/deletepost": handler.deletepost,
-	"/addpost": handler.addpost,
+	"/getpost":    handlers.GetPost,
+	"/deletepost": handlers.DeletePost,
+	"/addpost":    handlers.AddPost,
 }
-func Init(r *gin.Engine){
+
+func Init(r *gin.Engine) {
 	apiGroup := r.Group("/post")
 	for path, handler := range postRoutes {
-        apiGroup.POST(path, handler)
-    }
+		apiGroup.POST(path, handler)
+	}
 }
