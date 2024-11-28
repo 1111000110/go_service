@@ -1,20 +1,17 @@
 package main
 
 import (
+    "github.com/1111000110/go_service/service/post/conf"
+    "github.com/gin-gonic/gin"
     "github.com/1111000110/go_service/service/post/controller"
-    "log"
-    "net/http"
-	"fmt"
 )
-func main(){
-	controller:=&controller.Controller{}
-	controller.InitRoutes();//加载路由
-	fmt.Println("Hello")
-    // 定义服务器要监听的端口
-    port := "8080"
-    // 启动服务器
-    log.Printf("Server starting on port %s\n", port)
-    if err := http.ListenAndServe("0.0.0.0:"+port, nil); err != nil {
-        log.Fatal("ListenAndServe error: ", err)
-    }
+type resp struct{
+    Str string `json:"str"`
+}
+
+func main()  {
+    r := gin.Default()
+    conf.NetworkInit(r)//加载配置
+    controller.Init(r)//加载路由
+    r.Run(":8080")
 }
