@@ -26,7 +26,7 @@ var AppConfig Config
 
 // LoadConfig 从 JSON 配置文件加载配置
 func LoadConfig() error {
-	file, err := os.Open("services/post-service/internal/config/config.json")
+	file, err := os.Open("../internal/config/config.json")
 	if err != nil {
 		return fmt.Errorf("error opening config file: %v", err)
 	}
