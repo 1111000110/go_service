@@ -15,8 +15,8 @@ func Init() {
 func GetClient(Password string, DB int64) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     config.AppConfig.Redis.URI, // Redis 服务器地址
-		Password: "",                         // 默认没有密码
-		DB:       0,                          // 默认数据库
+		Password: Password,                   // 默认没有密码
+		DB:       int(DB),                    // 默认数据库
 	})
 	return rdb
 }
