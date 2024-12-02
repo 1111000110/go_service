@@ -20,6 +20,7 @@ func DeletePostByPid(c *gin.Context) {
 	err := service.DeletePostByPid(ctx, param.Pid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 	resp := postapi.DeletePostByPidResponse{
 		IsDeleted: true,

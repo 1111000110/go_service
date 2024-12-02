@@ -5,5 +5,8 @@
   "server": {
     "port": 8080,
     "debug": true
+  },
+  "redis": {
+    "url": "localhost:6379"
   }
 }

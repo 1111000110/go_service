@@ -12,7 +12,7 @@ import (
 
 func CreatePost(c *gin.Context) {
 	param := &postapi.CreatePostRequest{}
-	if err := c.ShouldBind(param); err != nil {
+	if err := c.ShouldBindJSON(param); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 	// 设置超时时间

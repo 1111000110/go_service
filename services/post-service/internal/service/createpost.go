@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/1111000110/go_service/services/post-service/internal/model"
 	"github.com/1111000110/go_service/services/post-service/internal/repository/mongo"
+	"github.com/1111000110/go_service/services/post-service/internal/repository/redis"
 	"github.com/1111000110/go_service/shared/proto/api/postapi"
 
 	"math/rand"
@@ -22,10 +23,11 @@ func CreatePost(ctx context.Context, param *postapi.CreatePostRequest) (*model.P
 		Ct:    time.Now().Unix(),
 		Ut:    time.Now().Unix(),
 	}
-	err := mongo.CreatePost(ctx, &post)
+	err := mongo.MongoCreatePost(ctx, &post)
 	if err != nil {
 		return nil, err
 	}
+	err = redis.CacheSetPost(ctx, &post)
 	return &post, nil
 }
 func generateUniqueInt64() int64 {

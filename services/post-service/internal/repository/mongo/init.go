@@ -9,12 +9,7 @@ import (
 	"log"
 )
 
-var Mongoclient *Client
-
-type Client struct {
-	Db     string        `json:"db"`
-	Client *mongo.Client `json:"client"`
-}
+var Mongoclient *mongo.Client
 
 func Init() {
 	// 设置 MongoDB 连接字符串
@@ -31,17 +26,14 @@ func Init() {
 		log.Fatal(err)
 	}
 	fmt.Println("成功连接到 MongoDB!")
-	Mongoclient = &Client{
-		Db:     config.AppConfig.Mongo.URI,
-		Client: client,
-	}
+	Mongoclient = client
 }
 
 // 选择数据库和集合
-func (c *Client) GetClient(database string, collec string) *mongo.Collection {
-	collection := c.Client.Database(database).Collection(collec)
+func GetClient(database string, collec string) *mongo.Collection {
+	collection := Mongoclient.Database(database).Collection(collec)
 	return collection
 }
 func GetPostCollection() *mongo.Collection {
-	return Mongoclient.GetClient("post", "posts")
+	return GetClient("post", "posts")
 }

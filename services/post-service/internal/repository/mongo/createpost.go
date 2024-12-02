@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func CreatePost(ctx context.Context, post *model.Post) error {
+func MongoCreatePost(ctx context.Context, post *model.Post) error {
 	collection := GetPostCollection()
 	// 插入文档
 	_, err := collection.InsertOne(ctx, post)

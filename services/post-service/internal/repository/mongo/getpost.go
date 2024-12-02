@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func GetPostsByPids(ctx context.Context, pids []int64) (*[]model.Post, error) {
+func MongoGetPostsByPids(ctx context.Context, pids []int64) (*[]model.Post, error) {
 	// 获取 MongoDB 的 collection
 	collection := GetPostCollection()
 	// 创建查询条件，使用 $in 操作符来查询多个 pid
@@ -38,7 +38,7 @@ func GetPostsByPids(ctx context.Context, pids []int64) (*[]model.Post, error) {
 
 	return &posts, nil
 }
-func GetPostsByMids(ctx context.Context, mids []int64) (*[]model.Post, error) {
+func MongoGetPostsByMids(ctx context.Context, mids []int64) (*[]model.Post, error) {
 	collection := GetPostCollection()
 	filter := bson.M{"mid": bson.M{"$in": mids}}
 	cursor, err := collection.Find(ctx, filter)
