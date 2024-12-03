@@ -12,12 +12,12 @@ import (
 func DeletePostByPid(c *gin.Context) {
 	param := &postapi.DeletePostByPidRequest{}
 	if err := c.ShouldBindJSON(param); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 	// 设置超时时间
 	ctx, cancel := context.WithTimeout(c, 100*time.Second)
 	defer cancel()
-	err := service.DeletePostByPid(ctx, param.Pid)
+	err := service.DeletePostByPid(ctx, param)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

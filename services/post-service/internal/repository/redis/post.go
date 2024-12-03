@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/1111000110/go_service/services/post-service/internal/model"
+	"github.com/1111000110/go_service/shared/models"
 	"github.com/go-redis/redis/v8"
 	"time"
 )
@@ -18,7 +18,7 @@ func CacheDeletePostByPid(ctx context.Context, pid int64) error {
 	}
 	return nil
 }
-func CacheSetPost(ctx context.Context, post *model.Post) error {
+func CacheSetPost(ctx context.Context, post *models.Post) error {
 	rdb := GetDefaultCollection()
 	// 将 post 对象转换为 JSON 字符串
 	postJSON, err := json.Marshal(post)
@@ -33,7 +33,7 @@ func CacheSetPost(ctx context.Context, post *model.Post) error {
 	}
 	return nil
 }
-func CacheSetPosts(ctx context.Context, posts *[]model.Post) error {
+func CacheSetPosts(ctx context.Context, posts *[]models.Post) error {
 	for _, post := range *posts {
 		err := CacheSetPost(ctx, &post)
 		if err != nil {
@@ -42,9 +42,9 @@ func CacheSetPosts(ctx context.Context, posts *[]model.Post) error {
 	}
 	return nil
 }
-func CacheGetPostsByPids(ctx context.Context, pids []int64) (*[]model.Post, error) {
+func CacheGetPostsByPids(ctx context.Context, pids []int64) (*[]models.Post, error) {
 	// 用于存储获取到的帖子
-	var posts []model.Post
+	var posts []models.Post
 	rdb := GetDefaultCollection()
 	// 循环遍历所有的 pids
 	for _, pid := range pids {
@@ -60,7 +60,7 @@ func CacheGetPostsByPids(ctx context.Context, pids []int64) (*[]model.Post, erro
 			return nil, fmt.Errorf("failed to get post from Redis: %v", err)
 		}
 		// 反序列化 JSON 数据为 Post 对象
-		var post model.Post
+		var post models.Post
 		err = json.Unmarshal([]byte(val), &post)
 		if err != nil {
 			return nil, fmt.Errorf("failed to unmarshal post data: %v", err)

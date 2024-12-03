@@ -3,9 +3,9 @@ package service
 import (
 	"context"
 	"fmt"
-	"github.com/1111000110/go_service/services/post-service/internal/model"
 	"github.com/1111000110/go_service/services/post-service/internal/repository/mongo"
 	"github.com/1111000110/go_service/services/post-service/internal/repository/redis"
+	"github.com/1111000110/go_service/shared/models"
 	"github.com/1111000110/go_service/shared/proto/api/postapi"
 
 	"math/rand"
@@ -13,8 +13,8 @@ import (
 	"time"
 )
 
-func CreatePost(ctx context.Context, param *postapi.CreatePostRequest) (*model.Post, error) {
-	post := model.Post{
+func CreatePost(ctx context.Context, param *postapi.CreatePostRequest) (*postapi.CreatePostResponse, error) {
+	post := models.Post{
 		Tid:   param.Tid,
 		Mid:   param.Mid,
 		Pid:   generateUniqueInt64(),
@@ -28,7 +28,13 @@ func CreatePost(ctx context.Context, param *postapi.CreatePostRequest) (*model.P
 		return nil, err
 	}
 	err = redis.CacheSetPost(ctx, &post)
-	return &post, nil
+	if err != nil {
+		return nil, err
+	}
+	resp := &postapi.CreatePostResponse{
+		Post: post,
+	}
+	return resp, nil
 }
 func generateUniqueInt64() int64 {
 	timestamp := time.Now().Unix()
