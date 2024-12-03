@@ -9,7 +9,11 @@ var postRoutes = map[string]gin.HandlerFunc{
 	"/getpostsbymids":  GetPostsByMids,
 	"/deletepostbypid": DeletePostByPid,
 	"/createpost":      CreatePost,
-	"/":                test,
+}
+var testRoutes = map[string]gin.HandlerFunc{
+	"/getswiperlist": GetSwiperList,
+	"/getnavlist":    getNavList,
+	"/get":           get,
 }
 
 func Init(r *gin.Engine) {
@@ -17,5 +21,8 @@ func Init(r *gin.Engine) {
 	for path, handler := range postRoutes {
 		apiGroup.POST(path, handler)
 	}
-	apiGroup.GET("/", test)
+	apitest := r.Group("/test")
+	for path, handler := range testRoutes {
+		apitest.GET(path, handler)
+	}
 }

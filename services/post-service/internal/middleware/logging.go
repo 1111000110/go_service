@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-// LoggingMiddleware 用于记录请求的日志（IP、请求头、请求体等）
 func LoggingMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 记录请求开始时间
