@@ -6,11 +6,11 @@ type GetPostsByPidsRequest struct {
 	Pids []int64 `json:"pids"`
 }
 type GetPostsByPidsResponse struct {
-	Posts []models.Post `json:"posts"`
+	Posts *[]models.Post `json:"posts"`
 }
 type GetPostsByMidsRequest struct {
 	Mids []int64 `json:"mids"`
 }
 type GetPostsByMidsResponse struct {
-	Posts []models.Post `json:"posts"`
+	Posts *[]models.Post `json:"posts"`
 }
