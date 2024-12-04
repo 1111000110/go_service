@@ -11,3 +11,12 @@ type CreateMemberRequest struct {
 type CreateMemberResponse struct {
 	Mid int64 `json:"mid"`
 }
+
+func (api *MemberApi) CreateMember(req *CreateMemberRequest) (*CreateMemberResponse, error) {
+	resp := &CreateMemberResponse{}
+	err := api.Post("/member/createmember", req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

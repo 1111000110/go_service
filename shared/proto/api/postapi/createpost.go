@@ -11,3 +11,12 @@ type CreatePostRequest struct {
 type CreatePostResponse struct {
 	Post models.Post `json:"post"`
 }
+
+func (api *PostApi) CreatePost(req *CreatePostRequest) (*CreatePostResponse, error) {
+	resp := &CreatePostResponse{}
+	err := api.Post("/post/createpost", req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

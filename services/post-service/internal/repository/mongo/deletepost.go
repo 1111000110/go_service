@@ -7,23 +7,30 @@ import (
 	"log"
 )
 
-func MongoDeletePostByPid(ctx context.Context, pid int64, mid int64) error {
-	// 获取 MongoDB 的 collection
+func MongoDeletePostByMid(ctx context.Context, mid int64) error {
 	collection := GetPostCollection()
-	// 构建查询条件
-	filter := bson.M{"pid": pid, "mid": mid}
+	filter := bson.M{"mid": mid}
+	result, err := collection.DeleteMany(ctx, filter)
+	if err != nil {
+		log.Printf("Error deleting post by PID: %v", err)
+		return err
+	}
+	if result.DeletedCount == 0 {
+		return errors.New("post not found")
+	}
+	return nil
+}
 
-	// 执行删除操作
+func MongoDeletePostByPid(ctx context.Context, pid int64, mid int64) error {
+	collection := GetPostCollection()
+	filter := bson.M{"pid": pid, "mid": mid}
 	result, err := collection.DeleteOne(ctx, filter)
 	if err != nil {
 		log.Printf("Error deleting post by PID: %v", err)
 		return err
 	}
-
-	// 检查是否成功删除
 	if result.DeletedCount == 0 {
 		return errors.New("post not found")
 	}
-
 	return nil
 }

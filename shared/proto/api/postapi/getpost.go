@@ -14,3 +14,20 @@ type GetPostsByMidsRequest struct {
 type GetPostsByMidsResponse struct {
 	Posts *[]models.Post `json:"posts"`
 }
+
+func (api *PostApi) GetPostsByPids(req *GetPostsByPidsRequest) (*GetPostsByPidsResponse, error) {
+	resp := &GetPostsByPidsResponse{}
+	err := api.Post("/post/getpostsbypids", req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+func (api *PostApi) GetPostsByMids(req *GetPostsByMidsRequest) (*GetPostsByMidsResponse, error) {
+	resp := &GetPostsByMidsResponse{}
+	err := api.Post("/post/getpostsbymids", req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

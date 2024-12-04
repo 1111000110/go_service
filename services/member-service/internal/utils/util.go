@@ -68,3 +68,14 @@ func DecryptPhoneNumber(encryptedPhoneNumber string) (string, error) {
 
 	return string(plaintext), nil
 }
+
+func ComparePhone(phoneNumber, encryptedPhoneNumber string) bool {
+	data, err := EncryptPhoneNumber(phoneNumber)
+	if err != nil {
+		return false
+	}
+	if data == encryptedPhoneNumber {
+		return true
+	}
+	return false
+}

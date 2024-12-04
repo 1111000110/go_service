@@ -8,12 +8,11 @@ var postRoutes = map[string]gin.HandlerFunc{
 	"/getpostsbypids":  GetPostsByPids,
 	"/getpostsbymids":  GetPostsByMids,
 	"/deletepostbypid": DeletePostByPid,
+	"/deletepostbymid": DeletePostByMid,
 	"/createpost":      CreatePost,
 }
 var testRoutes = map[string]gin.HandlerFunc{
-	"/getswiperlist": GetSwiperList,
-	"/getnavlist":    getNavList,
-	"/get":           get,
+	"/get": get,
 }
 
 func Init(r *gin.Engine) {
